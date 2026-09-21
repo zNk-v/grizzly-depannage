@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Génère le site statique Grizzly Dépannage. Lancer : python3 build.py"""
-import json, math, html, datetime, pathlib
+import json, math, html, datetime, pathlib, hashlib
 
 ROOT = pathlib.Path(__file__).parent
 DOMAIN = "https://grizzlydepannage.com/"
@@ -11,6 +11,7 @@ EMAIL = "grizzlydepannage@gmail.com"
 STREET, CP, CITY = "38 rue Pierre Brossolette", "91130", "Ris-Orangis"
 LAT0, LON0 = 48.6536, 2.4137
 TODAY = datetime.date.today().isoformat()
+def ver(p): return hashlib.md5((ROOT / p).read_bytes()).hexdigest()[:8]
 FONTS = "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&display=swap"
 
 # ---------------------------------------------------------------- icônes (tracé Lucide)
@@ -222,7 +223,7 @@ def head(title, desc, path, ld=(), og_title=None):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{FONTS}">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v={ver("assets/css/style.css")}">
 {lds}
 </head>
 <body>
@@ -291,7 +292,7 @@ def footer():
  </div>
 </footer>
 <div class="callbar"><a class="c1" href="{TEL_HREF}">{ic("phone")}<span class="num">{TEL}</span></a><a class="c2" href="sms:{TEL_E164}" aria-label="Envoyer un SMS">{ic("sms")}SMS</a></div>
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v={ver("assets/js/main.js")}" defer></script>
 </body>
 </html>
 '''

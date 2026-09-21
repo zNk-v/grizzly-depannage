@@ -34,14 +34,14 @@
     const fit = () => {
       const r = host.getBoundingClientRect(); W = r.width; H = r.height;
       cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (target && innerWidth > 767) { const e = target.getBoundingClientRect(); vp = { x: e.left + e.width / 2 - r.left, y: e.top + e.height / 2 - r.top }; }
+      if (target) { const e = target.getBoundingClientRect(); vp = { x: e.left + e.width / 2 - r.left, y: e.top + e.height * .55 - r.top }; }
       else vp = { x: W * (innerWidth > 767 ? .78 : .7), y: H * (target ? .2 : .32) };
       draw(0);
     };
     const P = (xw, z) => { const k = 1 / z; return [vp.x + (xw - vp.x) * k, vp.y + (H + 40 - vp.y) * k]; };
     const draw = time => {
       ctx.clearRect(0, 0, W, H);
-      const cx = vp.x - W * .08, half = Math.max(W * .55, 420), Z = 40;
+      const cx = vp.x - (innerWidth > 767 ? W * .08 : 0), half = Math.max(W * .55, 420), Z = 40;
       const L1 = P(cx - half, 1), R1 = P(cx + half, 1), L2 = P(cx - half, Z), R2 = P(cx + half, Z);
       const g = ctx.createLinearGradient(0, vp.y, 0, H);
       g.addColorStop(0, 'rgba(22,22,25,0)'); g.addColorStop(1, 'rgba(24,24,28,.9)');
