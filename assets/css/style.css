@@ -424,3 +424,58 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
   .gal-track{overflow-x:auto;transform:none!important;scroll-snap-type:x mandatory}
   .shot{scroll-snap-align:start}
 }
+
+/* ---------- Confiance : badge VHU, label État ---------- */
+.vhu{display:flex;align-items:center;gap:10px;padding:6px 14px 6px 7px;border-radius:14px;border:1px solid rgba(251,194,12,.38);background:rgba(251,194,12,.07);flex:none;transition:border-color .2s,background .2s}
+.vhu:hover{border-color:var(--y);background:rgba(251,194,12,.13)}
+.vhu-ico{width:34px;height:34px;border-radius:10px;background:var(--y);color:var(--ink);display:grid;place-items:center;flex:none}
+.vhu-ico svg{width:20px;height:20px}
+.vhu-txt{display:grid;gap:1px}
+.vhu small{font:600 .58rem/1.2 var(--f-b);letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+.vhu b{font:800 .86rem/1.1 var(--f-d);font-stretch:112%;color:var(--txt);white-space:nowrap}
+.vhu em{font:700 .72rem/1.15 var(--f-b);font-style:normal;color:var(--y);letter-spacing:.05em}
+.vhu .sm{display:none}
+.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tcard{display:flex;flex-direction:column;gap:10px;padding:26px;border-radius:var(--radius-lg);background:var(--ink-2);border:1px solid var(--line)}
+.tcard b{font:800 1.2rem/1.15 var(--f-d);font-stretch:112%}
+.tcard p{margin:0;color:var(--mut);font-size:.94rem}
+.tico{width:48px;height:48px;border-radius:14px;background:rgba(251,194,12,.1);color:var(--y);display:grid;place-items:center;margin-bottom:6px}
+.tico svg{width:24px;height:24px}
+.tcard-vhu{background:var(--y);border-color:var(--y);color:var(--ink)}
+.tcard-vhu .tico{background:var(--ink);color:var(--y)}
+.tcard-vhu p{color:rgba(10,10,11,.74)}
+.tcard-vhu .tk{font:700 .7rem/1 var(--f-b);letter-spacing:.14em;text-transform:uppercase;color:var(--ink);margin-bottom:-4px}
+.tcard-vhu .pr{font:900 1.55rem/1 var(--f-d);font-stretch:118%;letter-spacing:.02em}
+.tcard-label{background:#fff;border-color:#fff;color:var(--ink)}
+.tcard-label img{width:100%;max-width:190px;height:auto;margin:-6px 0 4px -10px}
+.tcard-label p{color:var(--mut-on-paper)}
+.ftr-labels{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.ftr-labels .lbl{width:118px;height:auto;border-radius:12px}
+.ftr-labels p{margin:0;flex:1 1 280px;max-width:62ch;font-size:.85rem;color:var(--mut-2)}
+.ftr-labels+.ftr-bot{margin-top:28px}
+.hdr-cta .live{display:none}
+.nav>a,.nav>.dd>button{white-space:nowrap}
+@media (max-width:1240px){.nav>a,.nav>.dd>button{padding:0 10px}.hdr .wrap{gap:18px}}
+@media (max-width:1140px){.nav{display:none}.burger{display:grid;margin-left:auto}.hdr-cta{order:3}}
+@media (max-width:1080px){.trust{grid-template-columns:1fr 1fr}}
+@media (max-width:767px){
+  .hdr .wrap{gap:10px}
+  .vhu{gap:7px;padding:5px 9px 5px 5px;border-radius:12px}
+  .vhu-ico{width:28px;height:28px;border-radius:8px}
+  .vhu-ico svg{width:17px;height:17px}
+  .vhu small{font-size:.5rem}
+  .vhu b{font-size:.74rem}
+  .vhu em{font-size:.64rem}
+  .vhu .lg{display:none}.vhu .sm{display:inline}
+  .trust{grid-template-columns:1fr}
+}
+@media (max-width:400px){
+  .brand{gap:8px}
+  .brand img{width:36px}
+  .brand b{font-size:1rem}
+  .brand small{font-size:.56rem;letter-spacing:.16em}
+  .hdr .vhu-ico{display:none}
+  .hdr .vhu{padding:5px 9px}
+}
+.burger{flex:none}
+@media (max-width:359px){.hdr .brand>span{display:none}}

@@ -5,11 +5,12 @@ import json, math, html, datetime, pathlib, hashlib
 ROOT = pathlib.Path(__file__).parent
 DOMAIN = "https://grizzlydepannage.com/"
 NAME = "Grizzly Dépannage"
-OWNER = "Mohamed Zoubir"
 TEL, TEL_E164, TEL_HREF = "06 07 94 57 98", "+33607945798", "tel:+33607945798"
 EMAIL = "grizzlydepannage@gmail.com"
 STREET, CP, CITY = "38 rue Pierre Brossolette", "91130", "Ris-Orangis"
 LAT0, LON0 = 48.6536, 2.4137
+VHU_PR = "PR 9100012D"  # agrément du centre VHU partenaire
+LABEL_IMG = "assets/img/labels/ministere-transition-ecologique.webp"
 TODAY = datetime.date.today().isoformat()
 def ver(p): return hashlib.md5((ROOT / p).read_bytes()).hexdigest()[:8]
 FONTS = "https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&display=swap"
@@ -46,6 +47,23 @@ esc = html.escape
 
 # ---------------------------------------------------------------- métiers
 SERVICES = [
+ dict(slug="enlevement-epave", img="epaves-vue-dessus", name="Enlèvement d’épave", icon="recycle",
+  short="Enlèvement gratuit de votre véhicule hors d’usage, remis à notre centre VHU agréé partenaire pour destruction.",
+  kpis=[("recycle", "Enlèvement gratuit", "Véhicule complet avec ses papiers"), ("shield", "Centre VHU agréé partenaire", "Agrément " + VHU_PR), ("doc", "Certificat de destruction", "Remis par le centre agréé")], trust=True,
+  title="Enlèvement d’épave gratuit à Ris-Orangis | Grizzly Dépannage",
+  desc="Épaviste à Ris-Orangis et 25 km autour : enlèvement d’épave gratuit, remise à un centre VHU agréé partenaire (PR 9100012D), certificat de destruction. 06 07 94 57 98.",
+  h1=["Enlèvement d’épave gratuit", "à <span class=y>Ris-Orangis</span>"],
+  lead="Une voiture hors d’usage dort dans votre garage, votre cour ou sur la rue ? Grizzly Dépannage l’enlève gratuitement et la remet à son partenaire, centre VHU agréé par la préfecture (PR 9100012D), qui la dépollue, la recycle et établit le certificat de destruction.",
+  items=["Carte grise barrée avec la mention « Vendu le … pour destruction », datée et signée", "Certificat de situation administrative (non-gage) de moins de 15 jours", "Pièce d’identité du titulaire de la carte grise"],
+  items_title="Les documents à préparer",
+  items2_title="Les véhicules concernés",
+  items2=["Voitures, utilitaires, motos et scooters", "Véhicules accidentés, brûlés ou non roulants", "Véhicules immobilisés depuis longtemps", "En garage, box, cour privée ou sur la voie publique"],
+  note="L’enlèvement est gratuit pour un véhicule complet, moteur et pièces principales en place, avec ses papiers. Véhicule désossé ou carte grise perdue : appelez, on regarde votre cas avant de se déplacer.",
+  faq=[("L’enlèvement d’épave est-il vraiment gratuit ?", "Oui, pour un véhicule complet, accessible au camion et accompagné de ses papiers. Aucun frais de déplacement. Si le véhicule est incomplet, on vous le dit au téléphone avant de venir."),
+       ("Quels documents fournir pour faire enlever une épave ?", "La carte grise barrée avec la mention « Vendu le … pour destruction », datée et signée, un certificat de non-gage de moins de 15 jours et la pièce d’identité du titulaire."),
+       ("J’ai perdu la carte grise, que faire ?", "Appelez-nous avec le numéro d’immatriculation. Selon la situation, une déclaration de perte peut suffire. On vous explique la démarche avant de se déplacer."),
+       ("Qui délivre le certificat de destruction ?", "Notre partenaire, le centre VHU agréé PR 9100012D, qui reçoit le véhicule. Ce certificat prouve la destruction et vous permet de résilier votre assurance."),
+       ("Êtes-vous épaviste agréé ?", "Grizzly Dépannage assure l’enlèvement et le transport. Le traitement du véhicule est réalisé par notre partenaire, centre VHU agréé par la préfecture sous le numéro PR 9100012D, dans le cadre de la filière réglementée par le Ministère de la Transition écologique.")]),
  dict(slug="depannage-automobile", img="arrimage-roue", name="Dépannage automobile", icon="wrench",
   short="Batterie à plat, crevaison, panne sèche, clés enfermées : on vous remet en route sur place quand c’est possible.",
   title="Dépannage automobile à Ris-Orangis 24h/24 | Grizzly Dépannage",
@@ -70,21 +88,6 @@ SERVICES = [
   faq=[("Combien coûte un remorquage autour de Ris-Orangis ?", "Le tarif dépend de la distance jusqu’à la destination, du type de véhicule et de l’heure. On vous le donne au téléphone avant de partir, pas au moment de payer."),
        ("Où déposez-vous le véhicule ?", "À l’adresse de votre choix : votre garage, votre domicile, une concession. Au-delà de la zone des 25 km, on vous fait un prix sur demande."),
        ("Remorquez-vous les motos et les utilitaires ?", "Oui : voitures, utilitaires, 4x4 et motos. Précisez le modèle au téléphone pour qu’on vienne avec le bon équipement.")]),
- dict(slug="enlevement-epave", img="epaves-vue-dessus", name="Enlèvement d’épave", icon="recycle",
-  short="Enlèvement gratuit d’un véhicule hors d’usage complet et remise à un centre VHU agréé pour destruction.",
-  title="Enlèvement d’épave gratuit à Ris-Orangis | Grizzly Dépannage",
-  desc="Épaviste à Ris-Orangis et 25 km autour : enlèvement d’épave gratuit pour un véhicule complet, remise en centre VHU agréé, certificat de destruction. 06 07 94 57 98.",
-  h1=["Enlèvement d’épave gratuit", "à <span class=y>Ris-Orangis</span>"],
-  lead="Une voiture hors d’usage dort dans votre garage, votre cour ou sur la rue ? Grizzly Dépannage l’enlève gratuitement et la remet à un centre VHU agréé, qui la détruit et établit le certificat de destruction.",
-  items=["Carte grise barrée avec la mention « Vendu le … pour destruction », datée et signée", "Certificat de situation administrative (non-gage) de moins de 15 jours", "Pièce d’identité du titulaire de la carte grise"],
-  items_title="Les documents à préparer",
-  items2_title="Les véhicules concernés",
-  items2=["Voitures, utilitaires, motos et scooters", "Véhicules accidentés, brûlés ou non roulants", "Véhicules immobilisés depuis longtemps", "En garage, box, cour privée ou sur la voie publique"],
-  note="L’enlèvement est gratuit pour un véhicule complet, moteur et pièces principales en place, avec ses papiers. Véhicule désossé ou carte grise perdue : appelez, on regarde votre cas avant de se déplacer.",
-  faq=[("L’enlèvement d’épave est-il vraiment gratuit ?", "Oui, pour un véhicule complet, accessible au camion et accompagné de ses papiers. Aucun frais de déplacement. Si le véhicule est incomplet, on vous le dit au téléphone avant de venir."),
-       ("Quels documents fournir pour faire enlever une épave ?", "La carte grise barrée avec la mention « Vendu le … pour destruction », datée et signée, un certificat de non-gage de moins de 15 jours et la pièce d’identité du titulaire."),
-       ("J’ai perdu la carte grise, que faire ?", "Appelez-nous avec le numéro d’immatriculation. Selon la situation, une déclaration de perte peut suffire. On vous explique la démarche avant de se déplacer."),
-       ("Qui délivre le certificat de destruction ?", "Le centre VHU agréé qui reçoit le véhicule. Ce certificat vous sert à prouver la destruction et à résilier votre assurance.")]),
  dict(slug="assistance-routiere", img="plateau-en-ville", name="Assistance routière", icon="cone",
   short="Panne ou accident sur la route, en zone commerciale ou en parking : mise en sécurité, dépannage ou remorquage.",
   title="Assistance routière autour de Ris-Orangis 24h/24 | Grizzly Dépannage",
@@ -231,6 +234,17 @@ def head(title, desc, path, ld=(), og_title=None):
 <div class="progress" aria-hidden="true"></div>
 '''
 
+def vhu_badge(href="enlevement-epave.html#agrement"):
+    return f'''<a class="vhu" href="{href}" aria-label="En partenariat avec le centre VHU agréé, agrément {VHU_PR}"><span class="vhu-ico">{ic("shield")}</span><span class="vhu-txt"><small><span class="lg">En partenariat avec le</span><span class="sm">Partenaire</span></small><b>Centre VHU agréé</b><em class="num">{VHU_PR}</em></span></a>'''
+
+def trust_cards():
+    return f'''<div class="trust">
+ <div class="tcard tcard-vhu rv" style="--i:0"><span class="tico">{ic("shield")}</span><p class="tk">En partenariat avec le</p><b>Centre VHU agréé</b><span class="pr num">{VHU_PR}</span><p>Votre véhicule part chez notre partenaire, centre de traitement des véhicules hors d’usage agréé par la préfecture.</p></div>
+ <div class="tcard tcard-label rv" style="--i:1"><img src="{LABEL_IMG}" width="520" height="365" alt="Ministère de la Transition écologique" loading="lazy"><b>Filière réglementée par l’État</b><p>Dépollution, recyclage des matériaux et traçabilité, selon les règles du Ministère de la Transition écologique.</p></div>
+ <div class="tcard rv" style="--i:2"><span class="tico">{ic("doc")}</span><b>Certificat de destruction</b><p>Établi par le centre agréé et enregistré au système d’immatriculation. Il vous libère du véhicule et de son assurance.</p></div>
+ <div class="tcard rv" style="--i:3"><span class="tico">{ic("recycle")}</span><b>0 € pour vous</b><p>Enlèvement gratuit d’un véhicule complet avec ses papiers, sans frais de déplacement.</p></div>
+</div>'''
+
 def header(active=""):
     dd = "".join(f'<a href="{s["slug"]}.html"><span class="ico">{ic(s["icon"])}</span><span><b>{s["name"]}</b><span>{esc(s["short"][:62].rsplit(" ",1)[0])}…</span></span></a>' for s in SERVICES)
     msub = "".join(f'<a href="{s["slug"]}.html">{s["name"]}</a>' for s in SERVICES)
@@ -238,10 +252,10 @@ def header(active=""):
     return f'''<header class="hdr">
  <div class="wrap">
   <a class="brand" href="./" aria-label="{NAME}, accueil"><img src="assets/img/brand.webp" width="48" height="52" alt=""><span><b>GRIZZLY</b><small>Dépannage</small></span></a>
+  {vhu_badge()}
   <nav class="nav" aria-label="Navigation principale">
    <div class="dd"><button type="button" aria-expanded="false" aria-haspopup="true">Services {ic("down")}</button><div class="dd-panel">{dd}</div></div>
    <a href="zone-intervention.html"{cur("zone")}>Zone d’intervention</a>
-   <a href="./#galerie">Galerie</a>
    <a href="./#faq">Questions</a>
    <a href="./#contact">Devis</a>
   </nav>
@@ -277,7 +291,7 @@ def footer():
   <div class="ftr-grid">
    <div>
     <a class="brand" href="./"><img src="assets/img/brand.webp" width="48" height="52" alt="" loading="lazy"><span><b>GRIZZLY</b><small>Dépannage</small></span></a>
-    <p>Dépannage, remorquage et enlèvement d’épave à Ris-Orangis et dans un rayon de 25 km. 24h/24 et 7j/7.</p>
+    <p>Enlèvement d’épave gratuit, dépannage et remorquage à Ris-Orangis et dans un rayon de 25 km. 24h/24 et 7j/7.</p>
     <ul class="meta">
      <li>{ic("phone")}<a class="num" href="{TEL_HREF}">{TEL}</a></li>
      <li>{ic("mail")}<a href="mailto:{EMAIL}">{EMAIL}</a></li>
@@ -288,7 +302,12 @@ def footer():
    <div><h4>Villes</h4><ul>{towns}<li><a href="zone-intervention.html">Toutes les communes →</a></li></ul></div>
    <div><h4>Infos</h4><ul><li><a href="./#faq">Questions fréquentes</a></li><li><a href="./#contact">Demande de devis</a></li><li><a href="mentions-legales.html">Mentions légales</a></li><li><a href="mentions-legales.html#confidentialite">Confidentialité</a></li></ul></div>
   </div>
-  <div class="ftr-bot"><span>© {datetime.date.today().year} {NAME} · {OWNER}</span><span>Ris-Orangis · Essonne (91)</span></div>
+  <div class="ftr-labels">
+   <img class="lbl" src="{LABEL_IMG}" width="520" height="365" alt="Ministère de la Transition écologique" loading="lazy">
+   {vhu_badge()}
+   <p>Enlèvement d’épave en partenariat avec un centre VHU agréé ({VHU_PR}). Filière des véhicules hors d’usage réglementée par le Ministère de la Transition écologique.</p>
+  </div>
+  <div class="ftr-bot"><span>© {datetime.date.today().year} {NAME}</span><span>Ris-Orangis · Essonne (91)</span></div>
  </div>
 </footer>
 <div class="callbar"><a class="c1" href="{TEL_HREF}">{ic("phone")}<span class="num">{TEL}</span></a><a class="c2" href="sms:{TEL_E164}" aria-label="Envoyer un SMS">{ic("sms")}SMS</a></div>
@@ -310,8 +329,7 @@ def business_ld():
      "@context": "https://schema.org", "@type": ["AutomotiveBusiness", "EmergencyService"], "@id": BIZ_ID,
      "name": NAME, "url": DOMAIN, "telephone": TEL_E164, "email": EMAIL,
      "image": DOMAIN + "og-image.jpg", "logo": DOMAIN + "favicon-512.png",
-     "description": "Dépanneur à Ris-Orangis (91) : dépannage automobile, remorquage, enlèvement d’épave gratuit, assistance routière, transport de véhicule et sortie de fourrière, 24h/24 et 7j/7 dans un rayon de 25 km.",
-     "founder": {"@type": "Person", "name": OWNER, "jobTitle": "Dépanneur"},
+     "description": "Épaviste et dépanneur à Ris-Orangis (91) : enlèvement d’épave gratuit en partenariat avec un centre VHU agréé (PR 9100012D), dépannage automobile, remorquage, assistance routière, transport de véhicule et sortie de fourrière, 24h/24 et 7j/7 dans un rayon de 25 km.",
      "address": {"@type": "PostalAddress", "streetAddress": STREET, "addressLocality": CITY, "postalCode": CP, "addressRegion": "Île-de-France", "addressCountry": "FR"},
      "geo": {"@type": "GeoCoordinates", "latitude": LAT0, "longitude": LON0},
      "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "00:00", "closes": "23:59"}],
@@ -353,10 +371,11 @@ def towns_bands(link_all=True):
 
 # ---------------------------------------------------------------- accueil
 HOME_FAQ = [
+ ("L’enlèvement d’épave est-il gratuit ?", "Oui, pour un véhicule complet, accessible au camion et accompagné de ses papiers. Le véhicule part chez notre partenaire, centre VHU agréé PR 9100012D, qui établit le certificat de destruction."),
+ ("Votre centre VHU est-il agréé ?", "Oui. Grizzly Dépannage enlève et transporte le véhicule, puis le remet à son partenaire, centre VHU agréé par la préfecture sous le numéro PR 9100012D. Le centre dépollue, recycle et délivre le certificat de destruction."),
  ("Combien coûte un dépannage ou un remorquage ?", "Le prix dépend de la distance, de l’heure et de la situation. Grizzly Dépannage vous annonce le tarif au téléphone avant que la dépanneuse ne parte. Vous décidez ensuite, sans engagement."),
  ("Intervenez-vous la nuit, le week-end et les jours fériés ?", "Oui. Le téléphone répond 24h/24 et 7j/7, jours fériés compris, et la dépanneuse part à toute heure."),
  ("Dans quelles villes intervenez-vous ?", "À Ris-Orangis et dans un rayon de 25 km : Évry-Courcouronnes, Grigny, Viry-Châtillon, Juvisy-sur-Orge, Draveil, Corbeil-Essonnes, Savigny-sur-Orge, Athis-Mons, Sainte-Geneviève-des-Bois, Brétigny-sur-Orge, Montgeron, Mennecy et les communes voisines."),
- ("L’enlèvement d’épave est-il gratuit ?", "Oui, pour un véhicule complet, accessible au camion et accompagné de ses papiers. Le véhicule part dans un centre VHU agréé qui établit le certificat de destruction."),
  ("Intervenez-vous sur l’autoroute A6 ?", "Non. Sur autoroute, seul le dépanneur agréé du secteur peut intervenir : appelez depuis une borne orange ou le 112. Une fois le véhicule sorti de l’autoroute, on le transporte jusqu’à votre garage."),
  ("Mon assurance peut-elle prendre en charge le dépannage ?", "Souvent, oui. Si votre contrat inclut une assistance, appelez-la d’abord car certains contrats imposent leur dépanneur. Sinon, on vous remet une facture détaillée à transmettre à votre assureur."),
 ]
@@ -382,24 +401,24 @@ def home():
     shots = "".join(f'''<figure class="shot">
   {photo(i, g)}
   <figcaption><div><b>{g[0]}</b><span>{g[1]}</span></div><span class="idx">{i+1:02d}</span></figcaption></figure>''' for i, g in enumerate(GALLERY))
-    ring = "GRIZZLY DÉPANNAGE · 24H/24 · 7J/7 · RIS-ORANGIS · 25 KM · "
-    return head("Dépannage et remorquage à Ris-Orangis 24h/24 | Grizzly Dépannage",
-                "Dépanneur à Ris-Orangis (91) : dépannage, remorquage, épave gratuite, sortie de fourrière. 24h/24 et 7j/7 dans un rayon de 25 km. 06 07 94 57 98.",
-                "index.html", ld, og_title="Grizzly Dépannage · Dépannage et remorquage à Ris-Orangis 24h/24") + header() + f'''
+    ring = "ÉPAVE GRATUITE · DÉPANNAGE 24H/24 · RIS-ORANGIS · 25 KM · "
+    return head("Enlèvement d’épave gratuit et dépannage à Ris-Orangis | Grizzly Dépannage",
+                "Épaviste et dépanneur à Ris-Orangis (91) : enlèvement d’épave gratuit avec un centre VHU agréé partenaire, certificat de destruction, dépannage et remorquage 24h/24 dans un rayon de 25 km. 06 07 94 57 98.",
+                "index.html", ld, og_title="Grizzly Dépannage · Enlèvement d’épave gratuit et dépannage à Ris-Orangis") + header() + f'''
 <main id="main">
 <section class="hero">
  <canvas class="road" aria-hidden="true"></canvas><div class="grain" aria-hidden="true"></div>
  <div class="wrap hero-grid">
   <div>
-   <p class="eyebrow fade">Dépanneur 24h/24 · Essonne (91)</p>
-   <h1 class="h-xl"><span class="ln"><span>Dépannage</span></span><span class="ln"><span style="--d:1">et remorquage</span></span><span class="ln"><span style="--d:2">à <span class="y">Ris-Orangis</span></span></span></h1>
-   <p class="lead fade" style="--d:1">Panne, accident, épave à enlever : appelez Mohamed Zoubir au <a class="num" href="{TEL_HREF}" style="color:var(--txt);font-weight:600">{TEL}</a>. Le prix vous est annoncé au téléphone, la dépanneuse part jour et nuit, dans un rayon de 25 km.</p>
+   <p class="eyebrow fade">Épaviste 24h/24 · Essonne (91)</p>
+   <h1 class="h-xl"><span class="ln"><span>Enlèvement</span></span><span class="ln"><span style="--d:1">d’épave <span class="y">gratuit</span></span></span><span class="ln"><span style="--d:2">à Ris-Orangis</span></span></h1>
+   <p class="lead fade" style="--d:1">Voiture hors d’usage, accidentée ou immobilisée : on l’enlève gratuitement et on la remet à notre partenaire, centre VHU agréé, qui établit le certificat de destruction. Une panne ? Même numéro, 24h/24 : <a class="num" href="{TEL_HREF}" style="color:var(--txt);font-weight:600">{TEL}</a>.</p>
    <div class="hero-ctas fade" style="--d:2">
-    <a class="btn btn-y btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Appeler le <span class="num">{TEL}</span></a>
-    <a class="btn btn-ghost btn-lg" href="#contact">Demander un devis</a>
+    <a class="btn btn-y btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Faire enlever mon épave</a>
+    <a class="btn btn-ghost btn-lg" href="enlevement-epave.html">Documents à préparer</a>
    </div>
    <ul class="chips fade" style="--d:3">
-    <li>{ic("tag")}Prix annoncé avant le départ</li><li>{ic("recycle")}Épave enlevée gratuitement</li><li>{ic("clock")}Jour, nuit, week-end</li><li>{ic("pin")}25 km autour de Ris-Orangis</li>
+    <li>{ic("recycle")}Épave enlevée gratuitement</li><li>{ic("shield")}Centre VHU agréé partenaire</li><li>{ic("doc")}Certificat de destruction</li><li>{ic("clock")}Dépannage 24h/24</li>
    </ul>
   </div>
   <div class="emblem fade" style="--d:1" aria-hidden="true">
@@ -410,6 +429,23 @@ def home():
  </div>
 </section>
 <div class="hero-foot"><div class="tape" aria-label="Communes desservies"><div class="marquee">{mq} {mq}</div></div></div>
+
+<section class="photoband" aria-labelledby="t-epave">
+ <img class="pb-img" src="assets/img/photos/epaves-vue-aerienne.webp" alt="Vue aérienne d’épaves de voitures en attente de destruction" loading="lazy" width="2000" height="1123">
+ <div class="wrap">
+  <p class="eyebrow rv">Épaviste à Ris-Orangis</p>
+  <h2 class="h-xl rv" id="t-epave">Votre épave part <br><span class="y">gratuitement.</span></h2>
+  <p class="lead rv" style="color:#d6d6d6">Véhicule complet avec ses papiers : on l’enlève sans frais et on le remet à notre centre VHU agréé partenaire ({VHU_PR}), qui établit le certificat de destruction.</p>
+  <div class="hero-ctas rv"><a class="btn btn-y btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Faire enlever mon épave</a><a class="btn btn-ghost btn-lg" href="enlevement-epave.html">Documents à préparer</a></div>
+ </div>
+ <span class="credit">Photo d’illustration</span>
+</section>
+<section class="sec" aria-labelledby="t-trust">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow rv">Filière agréée</p><h2 class="h-l rv" id="t-trust">Votre épave, <span class="y">traitée dans les règles.</span></h2><p class="lead rv">La loi impose de confier un véhicule hors d’usage à un centre VHU agréé. Grizzly Dépannage l’enlève chez vous et le remet à son partenaire agréé : vous n’avez rien d’autre à gérer.</p></div></div>
+  {trust_cards()}
+ </div>
+</section>
 
 <section class="sec on-paper" aria-labelledby="t-steps">
  <div class="wrap">
@@ -424,21 +460,11 @@ def home():
 
 <section class="sec" id="services" aria-labelledby="t-svc">
  <div class="wrap">
-  <div class="sec-head"><div><p class="eyebrow rv">Nos services</p><h2 class="h-l rv" id="t-svc">Six métiers, <span class="y">un seul numéro.</span></h2><p class="lead rv">De la batterie à plat à l’épave qui encombre votre cour, Grizzly Dépannage gère toute la chaîne avec son propre camion plateau.</p></div></div>
+  <div class="sec-head"><div><p class="eyebrow rv">Nos services</p><h2 class="h-l rv" id="t-svc">Six métiers, <span class="y">un seul numéro.</span></h2><p class="lead rv">De l’épave qui encombre votre cour à la batterie à plat, Grizzly Dépannage gère toute la chaîne avec son propre camion plateau.</p></div></div>
   <div class="svc-grid">{svc}</div>
  </div>
 </section>
 
-<section class="photoband" aria-labelledby="t-epave">
- <img class="pb-img" src="assets/img/photos/epaves-vue-aerienne.webp" alt="Vue aérienne d’épaves de voitures en attente de destruction" loading="lazy" width="2000" height="1123">
- <div class="wrap">
-  <p class="eyebrow rv">Épaviste à Ris-Orangis</p>
-  <h2 class="h-xl rv" id="t-epave">Votre épave part <br><span class="y">gratuitement.</span></h2>
-  <p class="lead rv" style="color:#d6d6d6">Véhicule complet avec ses papiers : on l’enlève sans frais et on le remet à un centre VHU agréé, qui établit le certificat de destruction.</p>
-  <div class="hero-ctas rv"><a class="btn btn-y btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Faire enlever mon épave</a><a class="btn btn-ghost btn-lg" href="enlevement-epave.html">Documents à préparer</a></div>
- </div>
- <span class="credit">Photo d’illustration</span>
-</section>
 <div class="divider" aria-hidden="true"></div>
 <section class="sec on-paper" aria-labelledby="t-why">
  <div class="wrap why">
@@ -446,16 +472,16 @@ def home():
    <p class="eyebrow rv">Pourquoi Grizzly</p>
    <h2 class="h-l rv" id="t-why">Un dépanneur local, <br>joignable pour de vrai.</h2>
    <ul class="checks">
-    <li class="rv" style="--i:1">{ic("user")}<div><b>Vous parlez au dépanneur</b><span>Au bout du fil, Mohamed Zoubir, celui qui se déplace. Pas de plateforme, pas d’intermédiaire.</span></div></li>
+    <li class="rv" style="--i:1">{ic("user")}<div><b>Vous parlez au dépanneur</b><span>Au bout du fil, celui qui se déplace. Pas de plateforme, pas d’intermédiaire.</span></div></li>
     <li class="rv" style="--i:2">{ic("tag")}<div><b>Prix annoncé avant le départ</b><span>Le montant est donné au téléphone. Pas de supplément découvert au moment de payer.</span></div></li>
     <li class="rv" style="--i:3">{ic("truck")}<div><b>Camion plateau</b><span>Votre véhicule voyage entièrement chargé sur le plateau, sans traîner au sol.</span></div></li>
     <li class="rv" style="--i:4">{ic("doc")}<div><b>Facture détaillée</b><span>Un document clair à transmettre à votre assurance ou à votre garage.</span></div></li>
    </ul>
   </div>
   <div class="facts">
-   <div class="fact rv rv-s" style="--i:1"><b>24<em>/</em>7</b><span>Téléphone ouvert jour et nuit, jours fériés compris</span></div>
-   <div class="fact rv rv-s" style="--i:2"><b>25<em> km</em></b><span>Rayon d’intervention autour de Ris-Orangis</span></div>
-   <div class="fact rv rv-s" style="--i:3"><b>0<em> €</em></b><span>Pour l’enlèvement d’une épave complète avec ses papiers</span></div>
+   <div class="fact rv rv-s" style="--i:1"><b>0<em> €</em></b><span>Pour l’enlèvement d’une épave complète avec ses papiers</span></div>
+   <div class="fact rv rv-s" style="--i:2"><b>24<em>/</em>7</b><span>Téléphone ouvert jour et nuit, jours fériés compris</span></div>
+   <div class="fact rv rv-s" style="--i:3"><b>25<em> km</em></b><span>Rayon d’intervention autour de Ris-Orangis</span></div>
    <div class="fact rv rv-s" style="--i:4"><b>1<em> n°</em></b><span>Un numéro direct : <a class="num" href="{TEL_HREF}"><b style="font:inherit;display:inline">{TEL}</b></a></span></div>
   </div>
  </div>
@@ -496,7 +522,7 @@ def home():
    <div class="callcard" style="margin-top:32px">
     <p class="eyebrow">Urgence 24h/24 · 7j/7</p>
     <a class="tel num" href="{TEL_HREF}">{TEL}</a>
-    <p>Mohamed Zoubir vous répond et vous annonce le prix avant de partir.</p>
+    <p>Le dépanneur vous répond et vous annonce le prix avant de partir.</p>
     <a class="btn btn-dark btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Appeler maintenant</a>
    </div>
    <ul class="meta">
@@ -528,6 +554,17 @@ def service_page(s):
     if s.get("items2"):
         second = f'<div><h2 class="h-m rv" style="margin-bottom:24px">{s["items2_title"]}</h2>{lis(s["items2"])}</div>'
     towns = "".join(f'<li><a href="{t["url"]}">{s["name"]} à {t["n"]}</a></li>' for t in TOWNS if t["page"])
+    kp = s.get("kpis") or [("tag", "Prix annoncé avant le départ", "Au téléphone, sans engagement"), ("clock", "24h/24 et 7j/7", "Nuits, week-ends et jours fériés"), ("pin", "Ris-Orangis et 25 km", "Essonne, nord 77 et sud 94")]
+    kpis = "".join(f'<div class="kpi rv rv-r" style="--i:{i+1}">{ic(k)}<div><b>{b}</b><span>{sp}</span></div></div>' for i, (k, b, sp) in enumerate(kp))
+    trust = ""
+    if s.get("trust"):
+        trust = f'''<section class="sec" id="agrement" aria-labelledby="t-trust">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow rv">Filière agréée</p><h2 class="h-l rv" id="t-trust">Un centre agréé, <span class="y">un certificat officiel.</span></h2></div></div>
+  {trust_cards()}
+ </div>
+</section>
+'''
     return head(s["title"], s["desc"], path, ld) + header() + f'''
 <main id="main">
 <section class="phero has-img">
@@ -542,15 +579,11 @@ def service_page(s):
     <p class="lead rv">{esc(s["lead"])}</p>
     <div class="hero-ctas rv"><a class="btn btn-y btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Appeler le <span class="num">{TEL}</span></a><a class="btn btn-ghost btn-lg" href="./#contact">Demander un devis</a></div>
    </div>
-   <div class="kpis">
-    <div class="kpi rv rv-r" style="--i:1">{ic("tag")}<div><b>Prix annoncé avant le départ</b><span>Au téléphone, sans engagement</span></div></div>
-    <div class="kpi rv rv-r" style="--i:2">{ic("clock")}<div><b>24h/24 et 7j/7</b><span>Nuits, week-ends et jours fériés</span></div></div>
-    <div class="kpi rv rv-r" style="--i:3">{ic("pin")}<div><b>Ris-Orangis et 25 km</b><span>Essonne, nord 77 et sud 94</span></div></div>
-   </div>
+   <div class="kpis">{kpis}</div>
   </div>
  </div>
 </section>
-<section class="sec on-paper">
+{trust}<section class="sec on-paper">
  <div class="wrap split">
   <div><h2 class="h-m rv" style="margin-bottom:24px">{s["items_title"]}</h2>{lis(s["items"])}</div>
   {second or f'<div class="prose rv"><h2 class="h-m" style="margin-bottom:24px;color:var(--ink)">Comment ça se passe</h2><p><strong>1. Vous appelez le {TEL}.</strong> Vous donnez l’adresse, le véhicule et la situation.</p><p><strong>2. On vous annonce le prix et l’heure d’arrivée.</strong> Vous acceptez ou non, sans engagement.</p><p><strong>3. On intervient.</strong> Sur place quand c’est possible, sinon on charge le véhicule sur le plateau.</p></div>'}
@@ -581,15 +614,16 @@ def town_page(t):
     axes = f" On connaît bien les accès par {t['axes']}." if t["axes"] else ""
     faq = [(f"Intervenez-vous à {t['n']} la nuit et le week-end ?", f"Oui. {t['n']} se trouve à {kmf(t['km'])} km de notre base de Ris-Orangis. Le téléphone répond 24h/24 et 7j/7, jours fériés compris."),
            (f"Combien coûte un dépannage à {t['n']} ?", f"Le prix dépend de l’heure, de la panne et de la destination du véhicule. On vous l’annonce au téléphone avant de partir pour {t['n']}, sans engagement."),
-           (f"Enlevez-vous les épaves à {t['n']} ?", f"Oui. L’enlèvement d’épave est gratuit à {t['n']} pour un véhicule complet avec ses papiers. Il part dans un centre VHU agréé qui établit le certificat de destruction.")]
+           (f"Enlevez-vous les épaves à {t['n']} ?", f"Oui. L’enlèvement d’épave est gratuit à {t['n']} pour un véhicule complet avec ses papiers. Il part chez notre partenaire, centre VHU agréé {VHU_PR}, qui établit le certificat de destruction.")]
+    faq = [faq[2], faq[0], faq[1]]
     ld = [{"@context": "https://schema.org", "@type": "Service", "name": f"Dépannage et remorquage à {t['n']}", "serviceType": "Dépannage automobile et remorquage",
            "url": DOMAIN + path, "provider": {"@id": BIZ_ID, "@type": "AutomotiveBusiness", "name": NAME, "telephone": TEL_E164},
            "areaServed": {"@type": "City", "name": t["n"], "address": {"@type": "PostalAddress", "postalCode": t["cp"], "addressLocality": t["n"], "addressCountry": "FR"}}},
           crumbs_ld([("Accueil", ""), ("Zone d’intervention", "zone-intervention.html"), (f"Dépannage {t['n']}", path)]), faq_ld(faq)]
     svc = "".join(f'<a class="other rv" style="--i:{i}" href="{s["slug"]}.html"><span class="ico">{ic(s["icon"])}</span><b>{s["name"]} à {t["n"]}</b></a>' for i, s in enumerate(SERVICES))
     nl = "".join((f'<li><a href="{x["url"]}">{x["n"]}</a></li>' if x["page"] else f'<li><span>{x["n"]}</span></li>') for x in near)
-    return head(f"Dépanneur {t['n']} ({t['cp']}) 24h/24 | Grizzly Dépannage",
-                f"Dépannage et remorquage à {t['n']} ({t['cp']}), à {kmf(t['km'])} km de Ris-Orangis. Épave enlevée gratuitement. 24h/24, prix annoncé avant le départ. {TEL}.",
+    return head(f"Épaviste et dépanneur {t['n']} ({t['cp']}) | Grizzly Dépannage",
+                f"Enlèvement d’épave gratuit et dépannage à {t['n']} ({t['cp']}), à {kmf(t['km'])} km de Ris-Orangis. Centre VHU agréé partenaire, certificat de destruction. 24h/24. {TEL}.",
                 path, ld) + header("zone") + f'''
 <main id="main">
 <section class="phero">
@@ -598,15 +632,15 @@ def town_page(t):
   <ol class="crumbs"><li><a href="./">Accueil</a></li><li><a href="zone-intervention.html">Zone d’intervention</a></li><li aria-current="page">{t["n"]}</li></ol>
   <div class="phero-grid">
    <div>
-    <p class="eyebrow rv">Dépanneur · {t["n"]} ({t["cp"]})</p>
-    <h1 class="h-xl rv" style="font-size:clamp(2.2rem,5.6vw,4.6rem)">Dépannage et remorquage <br>à <span class="y">{t["n"]}</span></h1>
-    <p class="lead rv">{t["n"]} se trouve à {kmf(t["km"])} km {t["dir"]} de notre base de Ris-Orangis.{axes} Panne, accident, épave : appelez, on vous donne le prix et l’heure d’arrivée avant de partir.</p>
+    <p class="eyebrow rv">Épaviste et dépanneur · {t["n"]} ({t["cp"]})</p>
+    <h1 class="h-xl rv" style="font-size:clamp(2.2rem,5.6vw,4.6rem)">Enlèvement d’épave et dépannage <br>à <span class="y">{t["n"]}</span></h1>
+    <p class="lead rv">{t["n"]} se trouve à {kmf(t["km"])} km {t["dir"]} de notre base de Ris-Orangis.{axes} Épave à faire enlever gratuitement, panne ou accident : appelez, on vous donne le prix et l’heure d’arrivée avant de partir.</p>
     <div class="hero-ctas rv"><a class="btn btn-y btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Appeler le <span class="num">{TEL}</span></a><a class="btn btn-ghost btn-lg" href="./#contact">Demander un devis</a></div>
    </div>
    <div class="kpis">
     <div class="kpi rv rv-r" style="--i:1">{ic("pin")}<div><b>{kmf(t["km"])} km de Ris-Orangis</b><span>Distance à vol d’oiseau depuis notre base</span></div></div>
     <div class="kpi rv rv-r" style="--i:2">{ic("clock")}<div><b>24h/24 et 7j/7</b><span>Nuits, week-ends et jours fériés</span></div></div>
-    <div class="kpi rv rv-r" style="--i:3">{ic("tag")}<div><b>Prix annoncé avant le départ</b><span>Au téléphone, sans engagement</span></div></div>
+    <div class="kpi rv rv-r" style="--i:3">{ic("shield")}<div><b>Épave gratuite, centre VHU agréé</b><span>Partenaire agréé {VHU_PR}</span></div></div>
    </div>
   </div>
  </div>
@@ -660,7 +694,7 @@ def legal_page():
 <section class="phero"><div class="wrap"><ol class="crumbs"><li><a href="./">Accueil</a></li><li aria-current="page">Mentions légales</li></ol><h1 class="h-l">Mentions légales</h1></div></section>
 <section class="sec"><div class="wrap prose">
 <h2>Éditeur du site</h2>
-<p>{NAME}, entreprise de {OWNER}<br>{STREET}, {CP} {CITY}<br>Téléphone : {TEL} · Courriel : {EMAIL}<br>Forme juridique : {T}<br>SIRET : {T}<br>Numéro de TVA : {T}<br>Directeur de la publication : {OWNER}</p>
+<p>{NAME}<br>{STREET}, {CP} {CITY}<br>Téléphone : {TEL} · Courriel : {EMAIL}<br>Forme juridique : {T}<br>SIRET : {T}<br>Numéro de TVA : {T}<br>Directeur de la publication : {T}</p>
 <h2>Assurance professionnelle</h2>
 <p>Assureur et numéro de contrat : {T}</p>
 <h2>Hébergement</h2>
@@ -688,11 +722,10 @@ def llms():
     faq = "\n".join(f"- **{q}** {a}" for q, a in HOME_FAQ)
     return f"""# {NAME} : dépanneur à Ris-Orangis (91)
 
-> {NAME} est une entreprise de dépannage et de remorquage automobile basée à Ris-Orangis (91130, Essonne), dirigée par {OWNER}. Elle intervient 24h/24 et 7j/7 dans un rayon de 25 km : dépannage sur place, remorquage sur plateau, enlèvement d’épave gratuit, assistance routière, transport de véhicule et sortie de fourrière. Le prix est annoncé au téléphone avant le départ. Téléphone : {TEL}.
+> {NAME} est un épaviste et dépanneur basé à Ris-Orangis (91130, Essonne). Il intervient 24h/24 et 7j/7 dans un rayon de 25 km : enlèvement d’épave gratuit en partenariat avec un centre VHU agréé ({VHU_PR}), dépannage sur place, remorquage sur plateau, assistance routière, transport de véhicule et sortie de fourrière. Le prix est annoncé au téléphone avant le départ. Téléphone : {TEL}.
 
 ## Coordonnées
 - Nom : {NAME}
-- Dirigeant : {OWNER}
 - Adresse : {STREET}, {CP} {CITY}, France
 - Téléphone : {TEL} ({TEL_E164})
 - Courriel : {EMAIL}
@@ -705,7 +738,7 @@ def llms():
 
 ## Ce qu’il faut savoir
 - Le tarif est annoncé au téléphone avant le départ de la dépanneuse, sans engagement.
-- L’enlèvement d’épave est gratuit pour un véhicule complet avec ses papiers ; le véhicule est remis à un centre VHU agréé.
+- L’enlèvement d’épave est gratuit pour un véhicule complet avec ses papiers ; le véhicule est remis au centre VHU agréé partenaire ({VHU_PR}), qui délivre le certificat de destruction. Filière réglementée par le Ministère de la Transition écologique.
 - {NAME} n’intervient pas sur l’autoroute A6 : la loi y réserve le dépannage aux dépanneurs agréés (borne orange ou 112).
 
 ## Communes desservies (distance depuis Ris-Orangis)
