@@ -12,19 +12,28 @@
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
   /* Burger */
-  const burger = d.querySelector('.burger');
-  burger && burger.addEventListener('click', () => {
-    const open = d.body.classList.toggle('menu-open');
+  const burger = d.querySelector('.burger'), mnav = d.getElementById('mnav');
+  const setMenu = open => {
+    d.body.classList.toggle('menu-open', open);
+    if (!burger) return;
     burger.setAttribute('aria-expanded', open);
-  });
-  d.querySelectorAll('.mnav a').forEach(a => a.addEventListener('click', () => d.body.classList.remove('menu-open')));
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    if (open && mnav) setTimeout(() => mnav.querySelector('a').focus({ preventScroll: true }), 60);
+  };
+  burger && burger.addEventListener('click', () => setMenu(!d.body.classList.contains('menu-open')));
+  d.querySelectorAll('.mnav a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  w.matchMedia('(min-width:1141px)').addEventListener('change', e => e.matches && setMenu(false));
 
   /* Dropdown keyboard / touch */
   d.querySelectorAll('.dd>button').forEach(b => b.addEventListener('click', () => {
     const dd = b.parentElement, o = dd.classList.toggle('open'); b.setAttribute('aria-expanded', o);
   }));
   d.addEventListener('click', e => d.querySelectorAll('.dd.open').forEach(dd => !dd.contains(e.target) && dd.classList.remove('open')));
-  d.addEventListener('keydown', e => { if (e.key === 'Escape') { d.querySelectorAll('.dd.open').forEach(dd => dd.classList.remove('open')); d.body.classList.remove('menu-open'); } });
+  d.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    d.querySelectorAll('.dd.open').forEach(dd => dd.classList.remove('open'));
+    if (d.body.classList.contains('menu-open')) { setMenu(false); burger.focus(); }
+  });
 
 
   /* Route en perspective (canvas) : les marquages filent vers l'emblème */

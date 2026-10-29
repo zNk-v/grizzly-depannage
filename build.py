@@ -247,8 +247,9 @@ def trust_cards():
 
 def header(active=""):
     dd = "".join(f'<a href="{s["slug"]}.html"><span class="ico">{ic(s["icon"])}</span><span><b>{s["name"]}</b><span>{esc(s["short"][:62].rsplit(" ",1)[0])}…</span></span></a>' for s in SERVICES)
-    msub = "".join(f'<a href="{s["slug"]}.html">{s["name"]}</a>' for s in SERVICES)
     cur = lambda k: ' aria-current="page"' if active == k else ""
+    tiles = [(s["slug"] + ".html", s["icon"], s["name"], s["slug"]) for s in SERVICES[1:]] + [("zone-intervention.html", "pin", "Zone d’intervention", "zone")]
+    msvc = "".join(f'<a class="mt" href="{h}" style="--i:{i+1}"{cur(k)}><span class="ico">{ic(n)}</span><b>{t}</b></a>' for i, (h, n, t, k) in enumerate(tiles))
     return f'''<header class="hdr">
  <div class="wrap">
   <a class="brand" href="./" aria-label="{NAME}, accueil"><img src="assets/img/brand.webp" width="48" height="52" alt=""><span><b>GRIZZLY</b><small>Dépannage</small></span></a>
@@ -267,13 +268,21 @@ def header(active=""):
  </div>
 </header>
 <nav class="mnav" id="mnav" aria-label="Menu mobile">
- <a href="./">Accueil {ic("arrow")}</a>
- <a href="./#services">Services {ic("arrow")}</a>
- <div class="sub">{msub}</div>
- <a href="zone-intervention.html">Zone d’intervention {ic("arrow")}</a>
- <a href="./#faq">Questions fréquentes {ic("arrow")}</a>
- <a href="./#contact">Demander un devis {ic("arrow")}</a>
- <a class="btn btn-y btn-lg" href="{TEL_HREF}">{ic("phone")}Appeler le {TEL}</a>
+ <div class="mnav-in">
+  <a class="mnav-top" href="enlevement-epave.html"{cur(SERVICES[0]["slug"])}><span class="ico">{ic("recycle")}</span><span class="t"><small>Notre priorité</small><b>Enlèvement d’épave gratuit</b><em>à Ris-Orangis et 25 km autour</em></span>{ic("arrow")}</a>
+  <p class="mnav-k">Services</p>
+  <div class="mnav-svc">{msvc}</div>
+  <p class="mnav-k">Infos</p>
+  <div class="mnav-links">
+   <a href="./" style="--i:7">Accueil {ic("arrow")}</a>
+   <a href="./#faq" style="--i:8">Questions fréquentes {ic("arrow")}</a>
+   <a href="./#contact" style="--i:9">Demander un devis {ic("arrow")}</a>
+  </div>
+ </div>
+ <div class="mnav-foot">
+  <span class="live"><i></i>Disponible 24h/24 et 7j/7</span>
+  <div class="mnav-cta"><a class="btn btn-y btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span><span class="num">{TEL}</span></a><a class="btn btn-ghost" href="sms:{TEL_E164}" aria-label="Envoyer un SMS">{ic("sms")}<span>SMS</span></a></div>
+ </div>
 </nav>
 '''
 
@@ -411,7 +420,7 @@ def home():
  <div class="wrap hero-grid">
   <div>
    <p class="eyebrow fade">Épaviste 24h/24 · Essonne (91)</p>
-   <h1 class="h-xl"><span class="ln"><span>Enlèvement</span></span><span class="ln"><span style="--d:1">d’épave <span class="y">gratuit</span></span></span><span class="ln"><span style="--d:2">à Ris-Orangis</span></span></h1>
+   <h1 class="h-xl"><span class="ln"><span>Enlèvement</span></span><span class="ln"><span style="--d:1">d’épave <span class="y">gratuit</span></span></span><span class="ln ln-city"><span style="--d:2"><span class="plate">{ic("pin")}à Ris-Orangis</span></span></span></h1>
    <p class="lead fade" style="--d:1">Voiture hors d’usage, accidentée ou immobilisée : on l’enlève gratuitement et on la remet à notre partenaire, centre VHU agréé, qui établit le certificat de destruction. Une panne ? Même numéro, 24h/24 : <a class="num" href="{TEL_HREF}" style="color:var(--txt);font-weight:600">{TEL}</a>.</p>
    <div class="hero-ctas fade" style="--d:2">
     <a class="btn btn-y btn-lg btn-call" href="{TEL_HREF}"><span class="ring">{ic("phone")}</span>Faire enlever mon épave</a>
@@ -565,7 +574,7 @@ def service_page(s):
  </div>
 </section>
 '''
-    return head(s["title"], s["desc"], path, ld) + header() + f'''
+    return head(s["title"], s["desc"], path, ld) + header(s["slug"]) + f'''
 <main id="main">
 <section class="phero has-img">
  <img class="phero-img" src="assets/img/photos/{s["img"]}.webp" alt="" width="2000" height="1333" fetchpriority="high">
